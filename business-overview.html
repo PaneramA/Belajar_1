@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Overview - Metabase API Demo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/business-overview.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#gradient)" />
+                    <path d="M16 8L24 12V20L16 24L8 20V12L16 8Z" fill="white" opacity="0.9" />
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
+                            <stop offset="0%" stop-color="#667eea" />
+                            <stop offset="100%" stop-color="#764ba2" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1>Business Overview</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="window.location.href='index.html'">
+                    ← Back to Dashboard
+                </button>
+                <button class="btn btn-secondary">
+                    🔄 Refresh
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Grid -->
+        <main class="dashboard-grid">
+            <!-- Total Orders by Product Category -->
+            <div class="dashboard-card">
+                <div class="card-header-simple">
+                    <h3>Total orders by product category</h3>
+                    <button class="btn-icon">⋯</button>
+                </div>
+                <div class="card-body">
+                    <canvas id="ordersDonutChart"></canvas>
+                    <div class="chart-legend" id="ordersLegend"></div>
+                </div>
+            </div>
+
+            <!-- Revenue per Quarter -->
+            <div class="dashboard-card">
+                <div class="card-header-simple">
+                    <h3>Revenue per quarter</h3>
+                    <button class="btn-icon">⋯</button>
+                </div>
+                <div class="card-body center">
+                    <div class="metric-large">
+                        <div class="metric-value">$141.9k</div>
+                        <div class="metric-label">Q4 2025</div>
+                        <div class="metric-change negative">↓ 0.95% vs. previous quarter</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revenue Goal -->
+            <div class="dashboard-card">
+                <div class="card-header-simple">
+                    <h3>Revenue goal for this quarter</h3>
+                    <button class="btn-icon">⋯</button>
+                </div>
+                <div class="card-body">
+                    <div class="goal-label">USD 145,337</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 58%"></div>
+                    </div>
+                    <div class="goal-range">
+                        <span>0</span>
+                        <span>Goal USD 250,000</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revenue by State (Map) -->
+            <div class="dashboard-card">
+                <div class="card-header-simple">
+                    <h3>Revenue by state</h3>
+                    <button class="btn-icon">⋯</button>
+                </div>
+                <div class="card-body">
+                    <div class="map-placeholder">
+                        <div class="map-legend">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #e3f2fd"></span>
+                                <span>$1.4k - $12.4k</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #90caf9"></span>
+                                <span>$16.8k - $27.2k</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #42a5f5"></span>
+                                <span>$30.0k - $42.6k</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #1e88e5"></span>
+                                <span>$64.7k - $66.6k</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #1565c0"></span>
+                                <span>$108.5k +</span>
+                            </div>
+                        </div>
+                        <div class="map-visual">🗺️ US Map Visualization</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Average Product Rating -->
+            <div class="dashboard-card small">
+                <div class="card-header-simple">
+                    <h3>Average product rating</h3>
+                    <button class="btn-icon">⋯</button>
+                </div>
+                <div class="card-body center">
+                    <canvas id="ratingGaugeChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Revenue and Orders Over Time -->
+            <div class="dashboard-card wide">
+                <div class="card-header-simple">
+                    <h3>Revenue and orders over time</h3>
+                    <button class="btn-icon">⋯</button>
+                </div>
+                <div class="card-body">
+                    <canvas id="revenueTimeChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Revenue by Product Category -->
+            <div class="dashboard-card">
+                <div class="card-header-simple">
+                    <h3>Revenue by product category</h3>
+                    <button class="btn-icon">⋯</button>
+                </div>
+                <div class="card-body">
+                    <canvas id="revenueBarChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Orders by Product Category -->
+            <div class="dashboard-card">
+                <div class="card-header-simple">
+                    <h3>Orders by product category</h3>
+                    <button class="btn-icon">⋯</button>
+                </div>
+                <div class="card-body">
+                    <canvas id="ordersLineChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Events by Quarter -->
+            <div class="dashboard-card">
+                <div class="card-header-simple">
+                    <h3>Events by quarter</h3>
+                    <button class="btn-icon">⋯</button>
+                </div>
+                <div class="card-body">
+                    <div class="events-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Account → Plan</th>
+                                    <th>Event</th>
+                                    <th>Q1</th>
+                                    <th>Q2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge">Basic</span></td>
+                                    <td>Button Clicked</td>
+                                    <td>785</td>
+                                    <td class="positive">9</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Page Viewed</td>
+                                    <td>5,006</td>
+                                    <td class="positive">6</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><strong>Totals for Basic</strong></td>
+                                    <td><strong>5,791</strong></td>
+                                    <td><strong>28</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge badge-blue">Business</span></td>
+                                    <td>Button Clicked</td>
+                                    <td>4</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Page Viewed</td>
+                                    <td>9</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><strong>Totals for Business</strong></td>
+                                    <td><strong>13</strong></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge badge-purple">Premium</span></td>
+                                    <td>Button Clicked</td>
+                                    <td>35</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Page Viewed</td>
+                                    <td>279</td>
+                                    <td class="positive">2</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><strong>Totals for Premium</strong></td>
+                                    <td><strong>314</strong></td>
+                                    <td><strong>2</strong></td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td colspan="2"><strong>Grand totals</strong></td>
+                                    <td><strong>6,118</strong></td>
+                                    <td><strong>31</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/business-overview.js"></script>
+</body>
+
+</html>
